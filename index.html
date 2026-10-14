@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Idiomas Watson · Propuesta de rediseño</title>
+<link rel="icon" href="https://www.idiomaswatson.com/wp-content/uploads/2017/03/cropped-LOGO-circle-only-low-32x32.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#7d2c8b; --purple-2:#91268e; --purple-dark:#5e1f69; --green:#00632d; --green-2:#008000;
+    --ink:#231a26; --text:#3d3640; --muted:#6e6572; --line:#ece4ee; --tint:#f8f3f9; --white:#fff;
+    --radius:16px; --max:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;color:var(--text);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+  .eyebrow{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--purple);font-weight:600}
+  h1,h2,h3{font-family:Outfit,Inter,sans-serif;color:var(--ink);line-height:1.12}
+
+  .demo{background:var(--ink);color:#e6d6ea;font-size:.76rem;text-align:center;padding:6px 16px}
+
+  /* top bar */
+  .topbar{background:var(--green-2);color:#fff;font-size:.82rem}
+  .topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:38px}
+  .topbar a:hover{text-decoration:underline}
+  .topbar .tlinks{display:flex;gap:20px;align-items:center}
+  .tdrop{position:relative}
+  .tdrop > span{cursor:default}
+  .tdrop > span::after{content:"▾";margin-left:5px;font-size:.7rem}
+  .tdrop ul{display:none;position:absolute;right:0;top:100%;background:var(--green);list-style:none;min-width:190px;padding:8px 0;border-radius:0 0 10px 10px;z-index:80;box-shadow:0 14px 30px -14px rgba(0,0,0,.4)}
+  .tdrop ul a{display:block;padding:7px 16px}
+  .tdrop:hover ul,.tdrop:focus-within ul{display:block}
+
+  /* header */
+  header.main{position:sticky;top:0;z-index:70;background:var(--purple-2);box-shadow:0 6px 20px -14px rgba(0,0,0,.5)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:78px;gap:16px}
+  .nav .logo img{height:54px;width:auto}
+  .menu{display:flex;list-style:none;gap:2px;align-items:center}
+  .menu > li{position:relative}
+  .menu > li > a,.menu > li > span{display:block;padding:10px 12px;color:#fff;font-weight:600;font-size:.88rem;border-radius:8px;cursor:pointer}
+  .menu > li > a:hover,.menu > li > span:hover{background:rgba(255,255,255,.12)}
+  .menu > li.has > a::after,.menu > li.has > span::after{content:"▾";margin-left:5px;font-size:.7rem;opacity:.8}
+  .sub{display:none;position:absolute;left:0;top:100%;background:#fff;list-style:none;min-width:250px;padding:10px;border-radius:12px;box-shadow:0 24px 50px -20px rgba(35,26,38,.45);border-top:3px solid var(--green-2)}
+  .sub a{display:block;padding:8px 12px;border-radius:8px;font-size:.88rem;color:var(--ink)}
+  .sub a:hover{background:var(--tint);color:var(--purple)}
+  .sub .grp{display:block;padding:10px 12px 4px;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .menu > li:hover > .sub,.menu > li:focus-within > .sub{display:block}
+  .sub.wide{min-width:520px;right:0;left:auto;columns:2;column-gap:10px}
+  .sub.wide li{break-inside:avoid}
+  .burger{display:none;background:none;border:1.5px solid rgba(255,255,255,.6);color:#fff;border-radius:10px;padding:9px 14px;font:600 .9rem Inter,sans-serif;cursor:pointer}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 24px;border-radius:999px;font-weight:600;font-size:.95rem;transition:.2s;border:2px solid transparent;cursor:pointer;font-family:inherit;white-space:nowrap}
+  .btn-purple{background:var(--purple);color:#fff}
+  .btn-purple:hover{background:var(--purple-dark)}
+  .btn-green{background:var(--green-2);color:#fff}
+  .btn-green:hover{background:var(--green)}
+  .btn-line{background:#fff;color:var(--purple);border-color:var(--purple)}
+  .btn-line:hover{background:var(--tint)}
+  .btn-white{background:#fff;color:var(--purple)}
+  .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
+  .btn-ghost:hover{border-color:#fff}
+
+  /* hero */
+  .hero{background:linear-gradient(135deg,var(--tint) 0%,#fff 60%);padding:70px 0 80px;border-bottom:1px solid var(--line)}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .hero h1{font-size:clamp(2.3rem,4.8vw,3.7rem);font-weight:800;margin:14px 0 18px;letter-spacing:-.01em}
+  .hero h1 em{font-style:normal;color:var(--purple)}
+  .hero .sub-h{font-size:1.25rem;color:var(--green);font-weight:600;font-family:Outfit,sans-serif;margin-bottom:30px}
+  .hero .row{display:flex;flex-wrap:wrap;gap:12px}
+  .hero-img{position:relative}
+  .hero-img img{border-radius:24px;aspect-ratio:4/3.2;object-fit:cover;width:100%;box-shadow:0 30px 60px -30px rgba(35,26,38,.55)}
+  .hero-img .badge{position:absolute;left:-22px;bottom:-22px;background:#fff;border-radius:18px;padding:12px;box-shadow:0 18px 40px -18px rgba(35,26,38,.45)}
+  .hero-img .badge img{width:72px;height:72px;border-radius:50%;aspect-ratio:auto;box-shadow:none}
+  .tel{font-variant-numeric:tabular-nums}
+
+  section{padding:88px 0}
+  .head{max-width:720px;margin-bottom:38px}
+  .head h2{font-size:clamp(1.9rem,3.4vw,2.6rem);font-weight:700;margin-top:8px}
+  .center{text-align:center;margin-left:auto;margin-right:auto}
+
+  /* tiles */
+  .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .tile{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;display:block;background:var(--ink)}
+  .tile img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .tile:hover img{transform:scale(1.05)}
+  .tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(61,20,68,.88))}
+  .tile h3{position:absolute;left:20px;right:20px;bottom:18px;z-index:2;color:#fff;font-size:1.35rem;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .tile h3::after{content:"→";font-size:1.1rem;width:36px;height:36px;border-radius:50%;background:var(--green-2);display:grid;place-items:center;flex:none}
+
+  /* statement */
+  .statement{background:var(--purple);color:#fff;padding:76px 0}
+  .statement p{font-family:Outfit,sans-serif;font-size:clamp(1.5rem,2.8vw,2.2rem);line-height:1.3;max-width:900px;margin:0 auto;text-align:center;font-weight:500}
+  .statement strong{color:#ffe7ff;font-weight:700;background:linear-gradient(transparent 62%,rgba(0,128,0,.75) 62%)}
+
+  /* features */
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .feat{display:flex;gap:14px;align-items:flex-start;background:var(--tint);border-radius:var(--radius);padding:22px 22px}
+  .feat .ck{flex:none;width:34px;height:34px;border-radius:50%;background:var(--green-2);color:#fff;display:grid;place-items:center}
+  .feat h3{font-family:Inter,sans-serif;font-size:1rem;font-weight:600;line-height:1.45;padding-top:5px}
+  .after{margin-top:34px;text-align:center}
+
+  /* audience */
+  .aud{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .aud-card{border:1px solid var(--line);border-radius:20px;padding:34px;background:#fff;position:relative;overflow:hidden}
+  .aud-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--purple)}
+  .aud-card.kids::before{background:var(--green-2)}
+  .aud-card > p{font-family:Outfit,sans-serif;font-size:1.3rem;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:20px}
+  .aud-card ol{list-style:none;counter-reset:n;display:grid;gap:14px}
+  .aud-card li{counter-increment:n;padding-left:46px;position:relative;line-height:1.5}
+  .aud-card li::before{content:counter(n);position:absolute;left:0;top:-3px;width:32px;height:32px;border-radius:50%;background:var(--tint);color:var(--purple);font-weight:700;display:grid;place-items:center;font-family:Outfit,sans-serif}
+  .aud-card.kids li::before{color:var(--green)}
+  .aud-card strong{color:var(--ink)}
+
+  .method{background:var(--tint);border-radius:24px;padding:40px 44px;margin-top:22px;display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
+  .method .ic{width:64px;height:64px;border-radius:50%;background:var(--purple);color:#fff;display:grid;place-items:center}
+  .method p{font-size:1.12rem;color:var(--ink)}
+  .method strong{color:var(--purple)}
+
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .gallery a{border-radius:14px;overflow:hidden;display:block;aspect-ratio:479/340}
+  .gallery img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+  .gallery a:hover img{transform:scale(1.05)}
+
+  /* reviews */
+  .reviews-sec{background:linear-gradient(180deg,#fff,var(--tint))}
+  .reviews{columns:3;column-gap:18px}
+  .rev{break-inside:avoid;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  .rev .top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+  .rev .name{font-weight:600;color:var(--ink)}
+  .stars{color:#f4b400;letter-spacing:2px;font-size:.95rem;white-space:nowrap}
+  .stars .off{color:#ddd}
+  .rev p{font-size:.93rem;margin-top:8px}
+  .rev .src{display:block;margin-top:12px;font-size:.74rem;color:var(--muted)}
+
+  /* cta band */
+  .band{background:var(--purple-2);color:#fff;padding:70px 0;text-align:center}
+  .band h2{color:#fff;font-size:clamp(1.8rem,3.2vw,2.4rem);font-weight:700}
+  .band p{margin-top:10px;color:#f1def4;font-size:1.1rem}
+  .band .row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:28px}
+
+  footer{background:var(--green);color:#e3f1e8;padding:46px 0 30px;font-size:.9rem}
+  .foot{display:grid;grid-template-columns:auto 1fr auto;gap:30px;align-items:center}
+  .foot img{height:52px;width:auto}
+  .foot ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px 22px}
+  .foot ul a:hover,.social a:hover{text-decoration:underline}
+  .social{display:flex;gap:10px}
+  .social a{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border:1px solid rgba(255,255,255,.35);border-radius:999px;font-size:.84rem}
+  .copy{margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,.18);font-size:.82rem;color:#bcdcc8}
+
+  .callbar{display:none}
+  .monly{display:none}
+
+  @media (max-width:1100px){
+    .menu > li > a,.menu > li > span{padding:10px 8px;font-size:.84rem}
+  }
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr}
+    .hero-img{max-width:620px}
+    .tiles,.feat-grid{grid-template-columns:1fr 1fr}
+    .gallery{grid-template-columns:1fr 1fr}
+    .reviews{columns:2}
+    .foot{grid-template-columns:1fr}
+    /* mobile nav */
+    .burger{display:block}
+    .menu{display:none;position:absolute;left:0;right:0;top:78px;background:#fff;flex-direction:column;align-items:stretch;padding:10px 16px 20px;max-height:calc(100vh - 120px);overflow-y:auto;box-shadow:0 30px 50px -20px rgba(0,0,0,.4)}
+    header.main.open .menu{display:flex}
+    .menu > li > a,.menu > li > span{color:var(--ink);font-size:1rem;padding:12px 6px;border-bottom:1px solid var(--line);border-radius:0}
+    .menu > li.has > a::after,.menu > li.has > span::after{content:none}
+    .sub,.sub.wide{display:block;position:static;box-shadow:none;border:0;padding:4px 0 10px 12px;min-width:0;columns:1}
+    .sub a{padding:7px 6px;font-size:.92rem;color:var(--text)}
+    .topbar .tlinks .tdrop{display:none}
+    .menu > li.monly{display:block}
+  }
+  @media (max-width:680px){
+    .wrap{padding:0 16px}
+    .topbar .wrap{justify-content:center}
+    .topbar .tphone{display:none}
+    .nav{height:68px}
+    .nav .logo img{height:44px}
+    .menu{top:68px}
+    .hero{padding:44px 0 60px}
+    .hero .row .btn{width:100%}
+    .hero-img .badge{left:12px;bottom:-18px;padding:8px}
+    .hero-img .badge img{width:54px;height:54px}
+    section{padding:62px 0}
+    .tiles,.feat-grid,.aud{grid-template-columns:1fr}
+    .tile{aspect-ratio:16/10}
+    .reviews{columns:1}
+    .aud-card{padding:26px 22px}
+    .method{grid-template-columns:1fr;padding:28px 24px}
+    .band .row .btn{width:100%}
+    .after .btn{width:100%}
+    .callbar{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;position:fixed;bottom:0;left:0;right:0;z-index:90;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid var(--line);box-shadow:0 -8px 24px -12px rgba(0,0,0,.2)}
+    .callbar .btn{padding:13px 8px;font-size:.86rem}
+    body{padding-bottom:76px}
+  }
+</style>
+</head>
+<body>
+
+<div class="demo">Propuesta de rediseño para Idiomas Watson · demo no oficial</div>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="tphone" href="tel:+34983305161">983 30 51 61</a>
+    <div class="tlinks">
+      <a href="https://e-learning.idiomaswatson.com">Acceso Portal E-Learning</a>
+      <a href="https://www.idiomaswatson.com/contacto/">Contacto</a>
+      <div class="tdrop" tabindex="0">
+        <span>Enlaces</span>
+        <ul>
+          <li><a href="https://www.idiomaswatson.com/spanish-courses/">Spanish Courses</a></li>
+          <li><a href="https://www.idiomaswatson.com/tefl-courses/">TEFL Courses</a></li>
+          <li><a href="https://www.idiomaswatson.com/franquicias/">Franquicias</a></li>
+          <li><a href="https://www.idiomaswatson.com/noticias-2/">Noticias</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="main" id="top">
+  <div class="wrap nav">
+    <a class="logo" href="https://www.idiomaswatson.com/" aria-label="Idiomas Watson"><img src="https://www.idiomaswatson.com/wp-content/uploads/2017/08/logo-completo-blanco-sm.png" alt="Idiomas Watson"></a>
+    <button class="burger" type="button" aria-label="Abrir menú" onclick="this.closest('header').classList.toggle('open')">Menú</button>
+    <ul class="menu">
+      <li class="has"><a href="https://www.idiomaswatson.com/ingles-para-ninos/">Niños/Adolescentes</a>
+        <ul class="sub">
+          <li><a href="https://www.idiomaswatson.com/ingles-para-ninos/">Inglés para Niños</a></li>
+          <li><a href="https://vimeo.com/showcase/9781954">Vídeos de los Niños</a></li>
+          <li><a href="https://www.idiomaswatson.com/ingles-para-adolescentes/">Inglés para Adolescentes</a></li>
+          <li><a href="https://vimeo.com/showcase/9782087">Vídeos de los Adolescentes</a></li>
+          <li><a href="https://www.idiomaswatson.com/ano-o-trimestre-escolar-en-irlanda/">Año o trimestre escolar en Irlanda</a></li>
+        </ul>
+      </li>
+      <li class="has"><a href="https://www.idiomaswatson.com/ingles-para-adultos/">Jóvenes/Adultos</a>
+        <ul class="sub">
+          <li><a href="https://www.idiomaswatson.com/ingles-para-jovenes/">Inglés hablado para Jóvenes</a></li>
+          <li><a href="https://www.idiomaswatson.com/ingles-para-adultos/">Inglés hablado para Adultos</a></li>
+          <li><a href="https://www.idiomaswatson.com/ingles-iniciacion-adultos/">Inglés iniciación para adultos</a></li>
+          <li><a href="https://www.idiomaswatson.com/titulos/">Títulos B1-B2-C1…</a></li>
+        </ul>
+      </li>
+      <li class="has"><a href="https://www.idiomaswatson.com/titulos/">Títulos</a>
+        <ul class="sub">
+          <li><a href="https://www.idiomaswatson.com/first-certificate/">Cambridge First Certificate</a></li>
+          <li><a href="https://www.idiomaswatson.com/advanced/">Cambridge Advanced &amp; Proficiency</a></li>
+          <li><a href="https://www.idiomaswatson.com/trinity-college-london/">B1, B2, C1 de Trinity</a></li>
+        </ul>
+      </li>
+      <li class="has"><a href="https://www.idiomaswatson.com/programas-en-el-extranjero/">Cursos Extranjero</a>
+        <ul class="sub">
+          <li><a href="https://www.idiomaswatson.com/programas-en-el-extranjero/">Cursos en el extranjero</a></li>
+          <li><a href="https://www.idiomaswatson.com/ano-o-trimestre-escolar-en-irlanda/">Año o trimestre escolar en Irlanda</a></li>
+        </ul>
+      </li>
+      <li class="has"><a href="https://www.idiomaswatson.com/formacion-para-empresas/">Empresas</a>
+        <ul class="sub">
+          <li><a href="https://www.idiomaswatson.com/formacion-programada/">Formación programada gratuita</a></li>
+          <li><a href="https://www.idiomaswatson.com/formacion-para-empresas/">Formación para empresas</a></li>
+          <li><a href="https://www.idiomaswatson.com/traducciones/">Traducciones</a></li>
+        </ul>
+      </li>
+      <li class="has"><span tabindex="0">Vídeos &amp; Fotos</span>
+        <ul class="sub wide">
+          <li><a href="https://vimeo.com/showcase/9781954">Entrevistas de estudiantes</a></li>
+          <li><span class="grp">Videos 2021-22</span></li>
+          <li><a href="https://vimeo.com/showcase/9780643">¿Qué pasa en las clases?</a></li>
+          <li><a href="https://vimeo.com/showcase/9782085">2021-22 Niños</a></li>
+          <li><a href="https://vimeo.com/showcase/9782087">2021-22 Adolescentes</a></li>
+          <li><a href="https://youtube.com/playlist?list=PLS5tHH4PtRC2tnTBMUk4svWYmhDFJSdpH">2021-22 Navidad</a></li>
+          <li><span class="grp">Vídeos 2020-21</span></li>
+          <li><a href="https://youtube.com/playlist?list=PLS5tHH4PtRC0TgWz4fciZw_MreJlhPwCM">2020-21 Niños</a></li>
+          <li><a href="https://youtube.com/playlist?list=PLS5tHH4PtRC2NoxQb6NOLrDu2uzvnQaec">2020-21 Adolescentes</a></li>
+          <li><a href="https://www.youtube.com/playlist?list=PLS5tHH4PtRC0gsjvSo3LVnC8HQoLKPh9t">2019-20 Clases Virtuales</a></li>
+          <li><span class="grp">2018-19 Vídeos</span></li>
+          <li><a href="https://photos.app.goo.gl/xyTGYqWeAysLDw269">2019 Padres Junio</a></li>
+          <li><a href="https://www.youtube.com/playlist?list=PLS5tHH4PtRC1g_E9xq1d4FUbrx9PNrIKV">2018-19 Niños</a></li>
+          <li><a href="https://www.youtube.com/playlist?list=PLS5tHH4PtRC1EGBeMf3u0pLv6v1kfsUoA">2018-19 Adolescentes</a></li>
+          <li><a href="https://photos.app.goo.gl/uz4GnW9vGpNVdidy9">2018-19 Fotos</a></li>
+          <li><span class="grp">Fotos y Vídeos Antiguos</span></li>
+          <li><a href="https://www.youtube.com/user/idiomaswatson">Todos los Vídeos</a></li>
+          <li><a href="https://photos.app.goo.gl/AXipxNCfbvxRSR5v8">2017-18 Fotos</a></li>
+          <li><a href="https://photos.app.goo.gl/QTucKnAjJeLaKXSY8">2016-17 Fotos</a></li>
+          <li><a href="https://photos.app.goo.gl/XFZSogBbvGt9gEYDA">2015-16 Fotos</a></li>
+          <li><a href="https://photos.app.goo.gl/3uJpjb9HYM1mXJ6eA">2014-15 Fotos</a></li>
+          <li><a href="https://photos.app.goo.gl/HDWa7j8JstsDGzkL9">2013-14 Fotos</a></li>
+          <li><a href="https://photos.app.goo.gl/dMAYS5KKhow89jts8">Fotos desde 1993</a></li>
+        </ul>
+      </li>
+      <li class="has monly"><span tabindex="0">Enlaces</span>
+        <ul class="sub">
+          <li><a href="https://www.idiomaswatson.com/spanish-courses/">Spanish Courses</a></li>
+          <li><a href="https://www.idiomaswatson.com/tefl-courses/">TEFL Courses</a></li>
+          <li><a href="https://www.idiomaswatson.com/franquicias/">Franquicias</a></li>
+          <li><a href="https://www.idiomaswatson.com/noticias-2/">Noticias</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Academia de inglés en Valladolid</span>
+        <h1>Entiende y habla inglés con soltura <em>disfrutando del proceso.</em></h1>
+        <p class="sub-h">Diagnóstico de nivel sin compromiso.</p>
+        <div class="row">
+          <a href="https://www.idiomaswatson.com/contacto/" class="btn btn-purple">Solicitar prueba de nivel gratis</a>
+          <a href="tel:+34983305161" class="btn btn-line">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+            <span class="tel">983 30 51 61</span>
+          </a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <img src="https://www.idiomaswatson.com/wp-content/uploads/2022/12/Adult-group-photo-for-web2.jpg" alt="Grupo de alumnos de Idiomas Watson">
+        <span class="badge"><img src="https://www.idiomaswatson.com/wp-content/uploads/2017/03/LOGO-circle-only-low.jpg" alt=""></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TILES -->
+  <section id="cursos">
+    <div class="wrap">
+      <div class="tiles">
+        <a class="tile" href="https://www.idiomaswatson.com/ingles-para-ninos/"><img src="https://www.idiomaswatson.com/wp-content/uploads/2022/08/class-with-children.jpg" alt=""><h3>Niños</h3></a>
+        <a class="tile" href="https://www.idiomaswatson.com/ingles-para-adolescentes/"><img src="https://www.idiomaswatson.com/wp-content/uploads/2017/08/jovenes.jpg" alt=""><h3>Adolescentes</h3></a>
+        <a class="tile" href="https://www.idiomaswatson.com/ingles-para-adultos/"><img src="https://www.idiomaswatson.com/wp-content/uploads/2022/12/Adult-group-photo-for-web2.jpg" alt=""><h3>Adultos</h3></a>
+        <a class="tile" href="https://www.idiomaswatson.com/titulos/"><img src="https://www.idiomaswatson.com/wp-content/uploads/2020/09/students-at-college.jpg" alt=""><h3>Títulos B1-B2-C1</h3></a>
+        <a class="tile" href="https://www.idiomaswatson.com/formacion-para-empresas/"><img src="https://www.idiomaswatson.com/wp-content/uploads/2017/09/empresas.jpg" alt=""><h3>Empresas</h3></a>
+        <a class="tile" href="https://www.idiomaswatson.com/ano-o-trimestre-escolar-en-irlanda/"><img src="https://www.idiomaswatson.com/wp-content/uploads/2017/03/extranjero.jpg" alt=""><h3>Año Escolar en el Extranjero</h3></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATEMENT -->
+  <div class="statement">
+    <div class="wrap">
+      <p>En Idiomas Watson hacemos realidad lo que la mayoría desea cuando piensa en aprender inglés: <strong>hablarlo sin miedo, sin bloqueos y sin pensar</strong>.</p>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="watson">
+    <div class="wrap">
+      <div class="head center" style="text-align:center">
+        <h2>DESDE NIÑOS HASTA ADULTOS</h2>
+      </div>
+      <div class="feat-grid">
+        <div class="feat"><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Más de 5.000 alumnos formados.</h3></div>
+        <div class="feat"><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Profesores nativos.</h3></div>
+        <div class="feat"><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Clases presenciales.</h3></div>
+        <div class="feat"><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Preparación de exámenes oficiales (Cambridge First, Cambridge Advanced, Trinity B1, B2 &amp; C1).</h3></div>
+        <div class="feat"><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Sistemas de aprendizaje totalmente personalizados.</h3></div>
+        <div class="feat"><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Adaptación por niveles.</h3></div>
+      </div>
+      <div class="after"><a href="https://www.idiomaswatson.com/contacto/" class="btn btn-green">Solicitar entrevista gratis</a></div>
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="aud">
+        <div class="aud-card">
+          <p>Si eres adulto, te ayudamos a conseguir lo que llevas tiempo buscando:</p>
+          <ol>
+            <li><strong>Mantener conversaciones reales</strong></li>
+            <li><strong>Entender distintos acentos</strong></li>
+            <li><strong>Sentirte seguro</strong> cuando hablas inglés, ya sea para viajar, trabajar o mejorar profesionalmente.</li>
+          </ol>
+        </div>
+        <div class="aud-card kids">
+          <p>Y si tienes hijos te damos exactamente lo que quieres para ellos:</p>
+          <ol>
+            <li>Que aprendan inglés <strong>hablando desde pequeños y de forma natural</strong>.</li>
+            <li>Que lo hablen con soltura.</li>
+            <li>Que tengan un futuro lleno de oportunidades.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="method">
+        <span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+        <p>Nuestro método está diseñado para que el estudiante <strong>hable inglés desde el primer minuto</strong>, con clases dinámicas, profesores nativos y un enfoque 100% práctico. Solo inglés real, útil y que se queda.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="instalaciones" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <h2>Aprender en unas buenas instalaciones es primordial</h2>
+      </div>
+      <div class="gallery">
+        <a href="https://www.idiomaswatson.com/wp-content/uploads/2014/09/A2-64736016-1.jpg" target="_blank" rel="noopener"><img src="https://www.idiomaswatson.com/wp-content/uploads/2014/09/A2-64736016-1.jpg" alt="Instalaciones de Idiomas Watson" loading="lazy"></a>
+        <a href="https://www.idiomaswatson.com/wp-content/uploads/2014/09/A2-64736003-1.jpg" target="_blank" rel="noopener"><img src="https://www.idiomaswatson.com/wp-content/uploads/2014/09/A2-64736003-1.jpg" alt="Instalaciones de Idiomas Watson" loading="lazy"></a>
+        <a href="https://www.idiomaswatson.com/wp-content/uploads/2014/09/A2-64736005-1.jpg" target="_blank" rel="noopener"><img src="https://www.idiomaswatson.com/wp-content/uploads/2014/09/A2-64736005-1.jpg" alt="Instalaciones de Idiomas Watson" loading="lazy"></a>
+        <a href="https://www.idiomaswatson.com/wp-content/uploads/2014/09/26-09-13-32-64735980-1.jpg" target="_blank" rel="noopener"><img src="https://www.idiomaswatson.com/wp-content/uploads/2014/09/26-09-13-32-64735980-1.jpg" alt="Instalaciones de Idiomas Watson" loading="lazy"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-sec" id="opiniones">
+    <div class="wrap">
+      <div class="head">
+        <h2>Lo que opinan nuestros alumnos</h2>
+      </div>
+      <div class="reviews">
+        <article class="rev"><div class="top"><span class="name">patricia</span><span class="stars">★★★★★</span></div>
+          <p>El trato ha sido muy bueno, Ya que se ha centrado de forma individual en cada persona presente allí. La entrevista ha sido útil para conocer cual es el servicio que ofrecen, las instalaciones o cómo se va a llevar a cabo las clases. También quiero resaltar el buen trato y orientación, ya que es algo que hacen de forma gratuita y sin compromiso alguno. En lo personal considero que esta entrevista inicial no me parece ninguna pérdida de tiempo porque te ayuda a conocer que buscas y como puedes mejorar.</p><span class="src">Publicado en Google</span></article>
+        <article class="rev"><div class="top"><span class="name">Maria Nuria Barbero Gutiérrez</span><span class="stars">★★★★★</span></div>
+          <p>Mi experiencia no ha podido ser mejor. La atención recibida ha sido extraordinaria: cercana, profesional, amable y con una implicación que hoy en día es difícil de encontrar. Ha sido un verdadero regalo encontrar el anuncio de esta academia y poder conocer de primera mano todo lo que ofrecen.</p>
+          <p>Quiero destacar especialmente el tiempo que han dedicado a resolver todas mis dudas. La información ha sido amplísima, muy detallada y explicada con claridad, transmitiéndome confianza y la tranquilidad de saber que mi hija estaría en muy buenas manos.</p>
+          <p>Ahora solo queda esperar con mucha ilusión que mi hija sea aceptada. Sin duda, recomiendo esta academia por la calidad humana y profesional con la que tratan a las familias. ¡Muchísimas gracias por una atención tan excelente!</p><span class="src">Publicado en Google</span></article>
+        <article class="rev"><div class="top"><span class="name">Alba MC</span><span class="stars">★★★★★</span></div>
+          <p>Objetivo conseguido: Título C1 con Academia Watson</p>
+          <p>Segundo título consecutivo logrado gracias al inmejorable profesorado de la academia: Lailac, Charlotte y Jonah.</p>
+          <p>Tras dos años en la Academia Watson puedo decir que es la mejor academia para aprender inglés, buenos profesores y enfocada, no solo aprender gramática y vocabulario, sino a saber hablar y desenvolverte en inglés.</p>
+          <p>Es un acierto seguro si quieres aprender inglés!!!!!!</p><span class="src">Publicado en Google</span></article>
+        <article class="rev"><div class="top"><span class="name">Raul Merayo</span><span class="stars">★★★★★</span></div>
+          <p>Me apunté a principios de año con la intención de conseguir el Trinity ISE II de inglés y he logrado mi objetivo 😬. Las clases han sido súper dinámicas y he logrado aprender muchísimo. Tener diferentes profesores con diferentes acentos ha sido de gran ayuda. Un 10 para la academia y los profesores, ha sido un placer poder aprender con vosotros. Un abrazo muy fuerte 😁.</p><span class="src">Publicado en Google</span></article>
+        <article class="rev"><div class="top"><span class="name">Manuela Gonzalez</span><span class="stars">★★★★★</span></div>
+          <p>Con diferencia, la mejor academia de inglés de Valladolid, auténticos profesionales, como la directora, dos profesores majísimos con distintos acentos y una inmejorable gestión. Matriculé a mi hija durante el curso escolar y la han llevado de la mano hasta que ha conseguido sacarse el C1.</p><span class="src">Publicado en Google</span></article>
+        <article class="rev"><div class="top"><span class="name">Sara</span><span class="stars">★★★★★</span></div>
+          <p>Aunque son muy estrictos, la mejor academia sin duda!!</p>
+          <p>Los niños aprenden jugando.<br>Profesores nativos de diferentes nacionalidades.<br>Grupos reducidos.<br>El trato es excepcional, siempre dispuestos a ayudar y a lograr sus objetivos con los niños.</p><span class="src">Publicado en Google</span></article>
+        <article class="rev"><div class="top"><span class="name">Juan Carlos Fernandez Mellado</span><span class="stars">★★★★<span class="off">★</span></span></div>
+          <p>Muy satisfactoria</p><span class="src">Publicado en Google</span></article>
+        <article class="rev"><div class="top"><span class="name">Fermin Rodriguez Iglesias</span><span class="stars">★★★★★</span></div>
+          <p>Estamos encantados</p><span class="src">Publicado en Google</span></article>
+        <article class="rev"><div class="top"><span class="name">dani de la fuente</span><span class="stars">★★★★★</span></div>
+          <p>Muy buena academia, los niños vienen muy contentos y además están aprendiendo un montón, los profesores de 10!</p><span class="src">Publicado en Google</span></article>
+        <article class="rev"><div class="top"><span class="name">Silvia Mojón</span><span class="stars">★★★★★</span></div>
+          <p>Muy profesionales. Yo noté mucho la pronunciación de la niña, sin duda volverá el año que viene. Mil gracias!!</p><span class="src">Publicado en Google</span></article>
+        <article class="rev"><div class="top"><span class="name">José Ignacio Cabrera Manso</span><span class="stars">★★★★★</span></div>
+          <p>Muy profesionales...</p><span class="src">Publicado en Google</span></article>
+        <article class="rev"><div class="top"><span class="name">Silvia Rodriguez</span><span class="stars">★★★★★</span></div>
+          <p>Contenta con los resultados</p><span class="src">Publicado en Google</span></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <div class="band">
+    <div class="wrap">
+      <h2>Diagnóstico de nivel sin compromiso.</h2>
+      <div class="row">
+        <a href="https://www.idiomaswatson.com/contacto/" class="btn btn-white">Solicitar prueba de nivel gratis</a>
+        <a href="tel:+34983305161" class="btn btn-ghost"><span class="tel">983 30 51 61</span></a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <a href="https://www.idiomaswatson.com/" aria-label="Idiomas Watson"><img src="https://www.idiomaswatson.com/wp-content/uploads/2017/08/logo-completo-blanco-sm.png" alt="Idiomas Watson"></a>
+      <ul>
+        <li><a href="https://www.idiomaswatson.com/terminos-de-uso/">Términos de Uso</a></li>
+        <li><a href="https://www.idiomaswatson.com/contacto/">Contacto</a></li>
+        <li><a href="https://www.idiomaswatson.com/ingles-para-ninos-valladolid/">Inglés para niños en Valladolid</a></li>
+        <li><a href="https://www.idiomaswatson.com/cursos-de-ingles-en-valladolid/">Cursos de inglés en Valladolid</a></li>
+      </ul>
+      <div class="social">
+        <a href="https://www.facebook.com/idiomaswatson/" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://twitter.com/idiomaswatson" target="_blank" rel="noopener">X</a>
+        <a href="https://instagram.com/watsonlanguages" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="copy">Copyright © 1993-2026 - Idiomas Watson. All rights reserved.</div>
+  </div>
+</footer>
+
+<div class="callbar">
+  <a href="tel:+34983305161" class="btn btn-line">Llamar</a>
+  <a href="https://www.idiomaswatson.com/contacto/" class="btn btn-purple">Prueba de nivel gratis</a>
+</div>
+</body>
+</html>
