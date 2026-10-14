@@ -12,7 +12,7 @@ Open `index.html` in a browser, or serve this directory with `python -m http.ser
 
 Images and logos still load from `www.idiomaswatson.com`; fonts load from Google Fonts. Navigation and contact buttons retain their original destinations. The original `noindex, nofollow` robots directive is unchanged.
 
-This is a snapshot of the published page, not a copy of the source repository's history or the separate WordPress pages linked from it. No GitHub Pages deployment or custom domain is configured.
+This is a snapshot of the published page, not a copy of the source repository's history or the separate WordPress pages linked from it. GitHub Pages publishes the root of the `main` branch as a public test site. No custom domain is configured.
 
 ## Integrity
 
